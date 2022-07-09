@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using DotNetRestApi.Models;
 using DotNetRestApi.Configurations;
 using DotNetRestApi.Services;
+using DotNetRestApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,10 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseWhen(
+    ctx => ctx.Request.Path.StartsWithSegments("/api/Callback"),
+    ab => ab.UseMiddleware<EnableRequestBodyBufferingMiddleware>());
 
 app.MapControllers();
 
