@@ -1,9 +1,9 @@
-using BookStoreApi.Models;
+using DotNetRestApi.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using BookStoreApi.Configurations;
+using DotNetRestApi.Configurations;
 
-namespace BookStoreApi.Services;
+namespace DotNetRestApi.Services;
 
 public class BooksService
 {

@@ -1,4 +1,4 @@
-namespace BookStoreApi.Configurations;
+namespace DotNetRestApi.Configurations;
 
 public class BookStoreDatabaseConfig
 {
