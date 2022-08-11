@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using DotNetRestApi.Models;
 using DotNetRestApi.Configurations;
 using DotNetRestApi.Services;
@@ -24,7 +25,16 @@ builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "DotNetRestApi", Version = "v1" });
+  c.SwaggerDoc("v1", new() { Title = "DotNetRestApi", Version = "v1" });
+});
+
+builder.Services.AddHttpClient("BLOCKPASS", httpClient =>
+{
+  const string BLOCKPASS_API_KEY = "";
+  const string BLOCKPASS_CLIENT_ID = "";
+  httpClient.BaseAddress = new Uri($"https://kyc.blockpass.org/kyc/1.0/connect/{BLOCKPASS_CLIENT_ID}/");
+  httpClient.DefaultRequestHeaders.Add(HeaderNames.Authorization, BLOCKPASS_API_KEY);
+  httpClient.DefaultRequestHeaders.Add(HeaderNames.CacheControl, "no-cache");
 });
 
 var app = builder.Build();
@@ -32,10 +42,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    // app.UseSwaggerUI();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DotNetRestApi v1"));
+  app.UseDeveloperExceptionPage();
+  app.UseSwagger();
+  //   app.UseSwaggerUI();
+  app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DotNetRestApi v1"));
 }
 
 // app.UseHttpsRedirection();
